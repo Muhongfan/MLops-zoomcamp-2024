@@ -3,6 +3,7 @@
 /service/web-service-with-Docker
 io_config.yaml
 EVs.ipynb
-aws_utils/
 problems.md
+.DS_Store
+
 
