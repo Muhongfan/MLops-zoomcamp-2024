@@ -1,0 +1,17 @@
+# config file version
+apiVersion: 1
+
+# list of datasources to insert/update
+# available in the database
+datasources:
+  - name: PostgreSQL
+    type: postgres
+    access: proxy
+    url: db:5431
+    database: energy_metrics
+    user: amberm
+    secureJsonData:
+      password: '20240819'
+    jsonData:
+      sslmode: 'disable'
+      database: test
