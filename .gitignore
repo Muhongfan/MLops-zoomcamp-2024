@@ -1,8 +1,8 @@
-./service/streaming
-./service/web-service-mlflow
-./service/web-service-with-Docker
+/service/streaming
+/service/web-service-mlflow
+/service/web-service-with-Docker
 io_config.yaml
 EVs.ipynb
-./aws_utils
+aws_utils/
 problems.md
 
