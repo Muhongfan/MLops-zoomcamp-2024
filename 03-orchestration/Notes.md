@@ -49,20 +49,11 @@ d. Open the Codespace in VS Code:
 - Enter `pip install mage-ai` instead of clone the repo
 - After installed all dependencies, use `mage start project-name` to open the Mage.
 
-***Note***:
-
-1. `Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?`
-ANS: Make sure the docker is running.
-2. After typing in browser, the code does not show in local env
-ANS: Save the code first.
-
 
 ### 3. Mage example BY Docker-compose ###
 1. Check if docker works
 There is the 
 [Example data pipeline: Quick Start](https://github.com/DataTalksClub/mlops-zoomcamp/blob/main/03-orchestration/3.0/README.md).
-
-
 
 
 ### Reference: 

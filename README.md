@@ -26,14 +26,14 @@ The dataset comprises 3,395 high-resolution EV charging sessions, with data coll
 - **reportedZip:** A ambiguous identifier for the Zip of the reported location.
 
 ## **Project Phases:**
-1. **Data Preprocessing:**
+1. **Exploratory Data Analysis (EDA):**
+   - Conduct EDA to understand the distribution of energy consumption, session durations, and other relevant features.
+   - Identify patterns, trends, and correlations within the data.
+   
+2. **Data Preprocessing for modeling:**
    - Clean and preprocess the data, handling any missing or inconsistent values.
    - Feature engineering to create additional relevant features such as `station_location` identifier.
    - Normalize and transform data as needed for model input.
-
-2. **Exploratory Data Analysis (EDA):**
-   - Conduct EDA to understand the distribution of energy consumption, session durations, and other relevant features.
-   - Identify patterns, trends, and correlations within the data.
 
 3. **Model Development:**
    - Split the data into training and testing sets.
@@ -51,8 +51,20 @@ The dataset comprises 3,395 high-resolution EV charging sessions, with data coll
 
 This project will contribute to the ongoing efforts in optimizing EV charging infrastructure and support sustainable energy management practices in workplace environments.
 
-## Installation
-### Using conda
+## The projects details
+1. **EDA and Data preprocessing**
+The primary goal of the first step is to gain a basic understanding of the dataset related to energy consumption during electric vehicle (EV) charging sessions. Additionally, the analysis will explore and identify relationships between key variables such as energy consumption, associated costs, distance traveled, charge time, and user behavior.
+
+All details are in [EDA for energy consumption dataset](project/EVs.ipynb)
+
+## Modelling and tracking
+The next step involves building the modeling process based on the exploration and setting up an experiment tracking pipeline using MLflow. The entire service will be deployed on AWS, utilizing EC2 for the tracking server, RDS for metadata storage, and an S3 bucket for storing datasets and models. Deployment will be managed using Docker to ensure consistency and scalability across the environment. This setup will streamline model experimentation and tracking, enhancing the efficiency of the development workflow.
+
+All details are in [the web service for energy consumption prediction project](project/service/web-service-mlflow-with-Docker)
+
+### **Setup**: 
+#### Environment preparetion
+* Using conda
 1. Clone the repository:
    
 `https://github.com/Muhongfan/MLops-zoomcamp-2024.git`
@@ -68,7 +80,7 @@ conda env create -f environment.yml
 conda activate mlopsproject
 `
 
-### Using Pip
+* Using Pip
 1. Clone the repository:
    
 `https://github.com/Muhongfan/MLops-zoomcamp-2024.git`
@@ -81,8 +93,7 @@ conda activate mlopsproject
 
 `pip install -r requirements.txt
 `
-
-the web service on could & docker 
+#### Docker build up
 
 1. Under the folder [service](service/web-service-mlflow-with-Docker). The tree of the folder is 
 ```
@@ -125,6 +136,8 @@ the web service on could & docker
 
 4. Run the test file via `python test.py`
 
+
+
 **Note**:
 
 * `docker logs -f` to show the realtime logs .
@@ -133,3 +146,21 @@ the web service on could & docker
 
 
 
+
+
+
+
+## Orchestration
+Using mage AI for ML workflow.
+
+![Data preparetion pipeline](images/projects/pipeline-dataprepare.png)
+
+### Setup
+1. Jump to folder `mlops/` and start the service with `./scripts/start.sh`
+
+2. Open `http://localhost:6789` in your browser.
+
+
+### Monitoring results (some)
+![The results of monitoring for datasets](images/projects/monitoring-datasets.png)
+![The results of monitoring for chargeTimeHrs](images/projects/monitoring-chargeTimeHrs.png)
