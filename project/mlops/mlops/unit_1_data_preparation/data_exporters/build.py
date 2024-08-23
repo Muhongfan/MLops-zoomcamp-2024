@@ -25,8 +25,13 @@ def export_data(data, *args, **kwargs):
     df, df_train, df_val = data
     target = kwargs.get('target', 'kwhTotal')
 
-    X, _, _ = vectorize_features(df)
-    y = df[target]
+    # print(df)
+
+    # df['created_date'] = df['created_date'].astype(str)
+    # df['created_date'] = df['created_date'].astype(str)
+
+    # X, _, _ = vectorize_features(df)
+    # y = df[target]
 
     X_train, X_val, dv = vectorize_features(
         df_train,
@@ -35,7 +40,7 @@ def export_data(data, *args, **kwargs):
     y_train = df_train[target]
     y_val = df_val[target]
 
-    return X, X_train, X_val, y, y_train, y_val, dv
+    return X_train, X_val,  y_train, y_val, dv
 
 @test
 def test_dataset(

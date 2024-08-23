@@ -33,13 +33,13 @@ blocks:
   language: python
   name: prepare
   retry_config: null
-  status: updated
+  status: executed
   timeout: null
   type: transformer
   upstream_blocks:
   - ingest
   uuid: prepare
-- all_upstream_blocks_executed: false
+- all_upstream_blocks_executed: true
   color: null
   configuration:
     file_source:
@@ -51,7 +51,7 @@ blocks:
   language: python
   name: build
   retry_config: null
-  status: executed
+  status: updated
   timeout: null
   type: data_exporter
   upstream_blocks:
@@ -120,7 +120,7 @@ widgets:
   type: chart
   upstream_blocks: []
   uuid: summary_overview_for_ingest
-- all_upstream_blocks_executed: false
+- all_upstream_blocks_executed: true
   color: null
   configuration:
     buckets: '20'

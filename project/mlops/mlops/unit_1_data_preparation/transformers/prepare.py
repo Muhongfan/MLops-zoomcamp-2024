@@ -26,20 +26,24 @@ def transform(data, *args, **kwargs):
         Anything (e.g. data frame, dictionary, array, int, str, etc.)
     """
     # Specify your transformation logic here
-    features = ['day_of_week', 'month', 'day', 'year', 'created_date', 'chargeTimeHrs', 'distance', 'Sta_Loc']
+    features = ['day_of_week',  'created_date', 'chargeTimeHrs', 'distance', 'stationId', 'locationId']
     target = ['kwhTotal']
 
     df = clean(data)
+    print("Succeffully cleaned data.")
 
-    df = combine_features(df)
-    df = select_features(df, features)
-    # print(df[features].drop(['kwhTotal'], axis=1))
+    # df = combine_features(df)
+    # print("Succeffully create additional relevant features")
+
+    # df = select_features(df, features)
+    X = df[features]
+    y = df[target]    # print(df[features].drop(['kwhTotal'], axis=1))
 
     test_size = 0.2
     random_state = 42
     df_train, df_val = split_on_value(
-        df[features].drop(['kwhTotal'], axis=1),
-        df[target],
+        X,
+        y,
         test_size,
         random_state
     )

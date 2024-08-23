@@ -12,6 +12,7 @@ numpy = "==1.23.5"
 requests = "*"
 boto3 = "*"
 mlflow = "*"
+mypy-extensions = "*"
 
 [dev-packages]
 

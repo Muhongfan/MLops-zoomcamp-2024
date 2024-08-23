@@ -2,7 +2,6 @@
 /service/web-service-mlflow
 /service/web-service-with-Docker
 io_config.yaml
-EVs.ipynb
 problems.md
 .DS_Store
 
