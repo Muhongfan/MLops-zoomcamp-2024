@@ -1,13 +1,4 @@
-training_set:
-  object_type: pipeline
-  object_uuid: data_preparation
-  outdated_after:
-    seconds: 700
-  project: unit_3_observability
-  repo_path: /home/src/mlops/unit_3_observability
-  settings:
-    build:
-      partitions: 1
+
 xgboost:
   object_type: pipeline
   object_uuid: xgboost_training

@@ -79,7 +79,7 @@ spark_config: {}
 tags: []
 type: python
 uuid: data_preparation
-variables_dir: /home/src/mage_data/unit_1_data_preparation
+variables_dir: /home/src/mage_data/project_energy_consumption
 widgets:
 - all_upstream_blocks_executed: true
   color: null

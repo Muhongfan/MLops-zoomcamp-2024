@@ -3,24 +3,24 @@ blocks:
   color: null
   configuration:
     file_source:
-      path: unit_2_training/global_data_products/training_set_energy_consumption.py
+      path: project_energy_consumption/global_data_products/training_data.py
     global_data_product:
-      uuid: training_set
+      uuid: training_dataset_energy
   downstream_blocks:
-  - xgboost
   - hyperparameters_setting_xgboost
+  - xgboost
   executor_config: null
   executor_type: local_python
   has_callback: false
   language: python
-  name: training_set_energy_consumption
+  name: training_data
   retry_config: null
-  status: failed
+  status: executed
   timeout: null
   type: global_data_product
   upstream_blocks: []
-  uuid: training_set_energy_consumption
-- all_upstream_blocks_executed: false
+  uuid: training_data
+- all_upstream_blocks_executed: true
   color: null
   configuration:
     file_source:
@@ -37,9 +37,9 @@ blocks:
   timeout: null
   type: transformer
   upstream_blocks:
-  - training_set_energy_consumption
+  - training_data
   uuid: hyperparameters_setting_xgboost
-- all_upstream_blocks_executed: false
+- all_upstream_blocks_executed: true
   color: null
   configuration:
     file_source:
@@ -55,8 +55,8 @@ blocks:
   timeout: null
   type: data_exporter
   upstream_blocks:
+  - training_data
   - hyperparameters_setting_xgboost
-  - training_set_energy_consumption
   uuid: xgboost
 cache_block_output_in_memory: false
 callbacks: []
@@ -86,5 +86,5 @@ variables:
   max_depth: 10
   max_evaluations: 50
   random_state: 42
-variables_dir: /home/src/mage_data/unit_2_training
+variables_dir: /home/src/mage_data/project_energy_consumption
 widgets: []

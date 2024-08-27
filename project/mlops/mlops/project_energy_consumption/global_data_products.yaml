@@ -1,0 +1,16 @@
+training_dataset_energy:
+  object_type: pipeline
+  object_uuid: data_preparation
+  outdated_after:
+    seconds: 599
+  project: project_energy_consumption
+  repo_path: /home/src/mlops/project_energy_consumption
+  settings:
+    build: {}
+xgboost_energy:
+  object_type: pipeline
+  object_uuid: xgboost_training
+  project: project_energy_consumption
+  repo_path: /home/src/mlops/project_energy_consumption
+  settings:
+    xgboost: {}

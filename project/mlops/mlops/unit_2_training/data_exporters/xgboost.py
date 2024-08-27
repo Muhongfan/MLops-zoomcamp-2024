@@ -35,4 +35,4 @@ def train(
 
     # DictVectorizer to transform features for online inference.
     vectorizer = training_set['build'][6]
-    return model, vectorizer
+    return model, hyperparameters, vectorizer
