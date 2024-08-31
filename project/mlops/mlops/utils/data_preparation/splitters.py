@@ -10,7 +10,6 @@ def split_on_value(
     random_state: int,
 ):
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, random_state=random_state)
-    
     # Combine X_train and y_train to form df_train
     df_train = pd.concat([X_train, y_train], axis=1)
 

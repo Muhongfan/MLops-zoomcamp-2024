@@ -14,7 +14,7 @@ blocks:
   language: python
   name: training_set_energy_usage
   retry_config: null
-  status: executed
+  status: failed
   timeout: null
   type: global_data_product
   upstream_blocks: []

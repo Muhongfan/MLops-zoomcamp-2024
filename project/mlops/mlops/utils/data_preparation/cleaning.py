@@ -44,4 +44,5 @@ def clean(
     categorical = ['stationId', 'locationId']
     df_filtered[categorical] = df_filtered[categorical].astype(str)
 
+
     return df_filtered

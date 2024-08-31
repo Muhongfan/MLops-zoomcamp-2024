@@ -33,13 +33,13 @@ blocks:
   language: python
   name: prepare
   retry_config: null
-  status: updated
+  status: executed
   timeout: null
   type: transformer
   upstream_blocks:
   - ingest
   uuid: prepare
-- all_upstream_blocks_executed: false
+- all_upstream_blocks_executed: true
   color: null
   configuration:
     file_source:
@@ -120,7 +120,7 @@ widgets:
   type: chart
   upstream_blocks: []
   uuid: summary_overview_for_ingest
-- all_upstream_blocks_executed: false
+- all_upstream_blocks_executed: true
   color: null
   configuration:
     buckets: '20'
@@ -136,6 +136,5 @@ widgets:
   status: failed
   timeout: null
   type: chart
-  upstream_blocks:
-  - prepare
+  upstream_blocks: []
   uuid: prepare_histogram_j6

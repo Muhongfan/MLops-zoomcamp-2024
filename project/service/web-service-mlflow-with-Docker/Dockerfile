@@ -19,7 +19,7 @@ COPY predict.py ./
 
 # Set environment variables
 ENV AWS_PROFILE=mac2aws
-ENV RUN_ID=55703e594fdc4cf2a3958502b7c10b9e
+ENV RUN_ID=ccb1e1f2811a426396410a62e6c81da5
 ENV EXP_ID=4
 
 # Expose the port that the application will run on
