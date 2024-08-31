@@ -5,4 +5,4 @@ io_config.yaml
 EVs.ipynb
 ./aws_utils
 problems.md
-
+.venv
