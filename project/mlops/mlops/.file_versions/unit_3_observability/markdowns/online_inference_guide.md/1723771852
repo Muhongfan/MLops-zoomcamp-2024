@@ -1,0 +1,87 @@
+# Sample online inference
+
+Use the following CURL command to get real-time predictions:
+
+```curl
+curl --location 'http://localhost:6789/api/runs' \
+--header 'Authorization: Bearer ef46ef6d89f44853b3d31ef771991bc5' \
+--header 'Content-Type: application/json' \
+--header 'Cookie: lng=en' \
+--data '{
+    "run": {
+        "pipeline_uuid": "predict",
+        "block_uuid": "inference",
+        "variables": {
+            "inputs": [
+                {
+                "day_of_week": 0,
+                   
+                "month": 7,
+
+                "day": 27,
+
+                "year": 2015,
+
+                "created_date":2015-07-27,
+
+                "chargeTimeHrs": 2.720555556,
+
+                "distance": 28.5290954,
+
+                "Sta_Loc":874950_814002,
+
+                "kwhTotal": 6.99
+
+                },
+                2
+
+9
+
+9
+
+2015
+
+2015-09-09
+
+2.923611111
+
+32.8745456
+
+369001_493904
+
+6.76
+
+2
+
+                {
+                    "day_of_week": 0,
+                   
+                "month": 7,
+
+                "day": 27,
+
+                "year": 2015,
+
+                "created_date":2015-07-27,
+
+                "chargeTimeHrs": 2.720555556,
+
+                "distance": 28.5290954,
+
+                "Sta_Loc":874950_814002,
+
+                "kwhTotal": 6.99
+
+                }
+            ]
+        }
+    }
+}'
+```
+
+## Note
+
+The `Authorization` header is using this pipeline’s API trigger’s token value.
+The token value is set to `fire` for this project.
+If you create a new trigger, that token will change.
+Only use a fixed token for testing or demonstration purposes.

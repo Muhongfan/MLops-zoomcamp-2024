@@ -1,0 +1,90 @@
+blocks:
+- all_upstream_blocks_executed: true
+  color: null
+  configuration:
+    file_source:
+      path: unit_2_training/transformers/hyperparameters_setting_xgboost.py
+  downstream_blocks:
+  - xgboost
+  - training_data
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: Hyperparameters_setting_xgboost
+  retry_config: null
+  status: executed
+  timeout: null
+  type: transformer
+  upstream_blocks: []
+  uuid: hyperparameters_setting_xgboost
+- all_upstream_blocks_executed: true
+  color: null
+  configuration:
+    file_source:
+      path: project_energy_consumption/global_data_products/training_data.py
+    global_data_product:
+      uuid: training_dataset_energy
+  downstream_blocks:
+  - xgboost
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: training_data
+  retry_config: null
+  status: not_executed
+  timeout: null
+  type: global_data_product
+  upstream_blocks:
+  - hyperparameters_setting_xgboost
+  uuid: training_data
+- all_upstream_blocks_executed: false
+  color: null
+  configuration:
+    file_source:
+      path: unit_2_training/data_exporters/xgboost.py
+  downstream_blocks: []
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: XGBoost
+  retry_config: null
+  status: executed
+  timeout: null
+  type: data_exporter
+  upstream_blocks:
+  - hyperparameters_setting_xgboost
+  - training_data
+  uuid: xgboost
+cache_block_output_in_memory: false
+callbacks: []
+concurrency_config: {}
+conditionals: []
+created_at: '2024-08-15 04:23:29.972678+00:00'
+data_integration: null
+description: null
+executor_config: {}
+executor_count: 1
+executor_type: null
+extensions: {}
+name: xgboost_training
+notification_config: {}
+remote_variables_dir: null
+retry_config: {}
+run_pipeline_in_one_process: false
+settings:
+  triggers: null
+spark_config: {}
+tags:
+- xgboost
+type: python
+uuid: xgboost_training
+variables:
+  early_stop_rounds: 5
+  max_depth: 10
+  max_evaluations: 50
+  random_state: 42
+variables_dir: /home/src/mage_data/project_energy_consumption
+widgets: []
