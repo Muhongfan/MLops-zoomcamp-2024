@@ -19,13 +19,13 @@ if 'data_exporter' not in globals():
 
 EVIDENTLY_HOST = os.environ.get('EVIDENTLY_HOST', 'http://localhost:8000')
 TRACKING_URI = os.environ.get("TRACKING_URI", "http://localhost:5000")
-EXPERIMENT_NAME = os.environ.get("EXPERIMENT_NAME", "LR-Anemia-model")
+EXPERIMENT_NAME = os.environ.get("EXPERIMENT_NAME")
 
 @data_exporter
 def export_data(data, *args, **kwargs):
     logged_model, artifact_uri, run_id = data
     print(logged_model, artifact_uri, run_id)
-    target = pl.col("Anaemic")
+    target = pl.col("Energy consumption")
     num_features = (
         '%Red Pixel',
         '%Green pixel',
@@ -37,38 +37,36 @@ def export_data(data, *args, **kwargs):
     loaded_model = mlflow.pyfunc.load_model(logged_model)
     # Load Data
     client = MlflowClient()
-    tmp_path = client.download_artifacts(run_id, "preprocessor/x_train.pkl")
+    tmp_path = client.download_artifacts(run_id, "models/train_df.pkl")
     with open(tmp_path, 'rb') as f:
-        X_train = pickle.load(f)
-    tmp_path = client.download_artifacts(run_id, "preprocessor/y_train.pkl")
-    with open(tmp_path, 'rb') as f:
-        Y_train = pickle.load(f)
-    # print(X_train, Y_train)
+        train_df = pickle.load(f)
+    X_train = train_df.drop('target')
+    Y_train = train_df['target'] 
+    print("X_train, Y_train:", X_train, Y_train)
 
-    tmp_path = client.download_artifacts(run_id, "preprocessor/x_test.pkl")
+    tmp_path = client.download_artifacts(run_id, "models/test_df.pkl")
     with open(tmp_path, 'rb') as f:
-        X_test = pickle.load(f)
-    tmp_path = client.download_artifacts(run_id, "preprocessor/y_test.pkl")
-    with open(tmp_path, 'rb') as f:
-        Y_test = pickle.load(f)
-    
-    # print(X_test, Y_test)
+        test_df = pickle.load(f)
+    X_test = test_df.drop('target')
+    Y_test = test_df['target'] 
+    print("X_test, Y_test:", X_test, Y_test)
     # Evaluate
+
     pred = loaded_model.predict(X_train.to_pandas())
     df_train = X_train.with_columns(
-        Anaemic=pl.lit(Y_train.get_column('Anaemic').to_list()),
-        Pred_Anaemic=pl.lit(pred)
+        kwhTotal=pl.lit(Y_train.get_column('kwhTotal').to_list()),
+        Pred_kwhTotal=pl.lit(pred)
     )
     pred = loaded_model.predict(X_test.to_pandas())
     df_test = X_test.with_columns(
-        Anaemic=pl.lit(Y_test.get_column('Anaemic').to_list()),
-        Pred_Anaemic=pl.lit(pred)
+        kwhTotal=pl.lit(Y_test.get_column('kwhTotal').to_list()),
+        Pred_kwhTotal=pl.lit(pred)
     )
     # print(df_train)
     # Evidently Mapping
     column_mapping = ColumnMapping(
-        target='Anaemic',
-        prediction='Pred_Anaemic',
+        target='kwhTotal',
+        prediction='Pred_kwhTotal',
         numerical_features=num_features
     )
     
@@ -80,7 +78,7 @@ def export_data(data, *args, **kwargs):
             ColumnDriftMetric(column_name='%Green pixel'),
             ColumnDriftMetric(column_name='%Blue pixel'),
             ColumnDriftMetric(column_name='Hb'),
-            ColumnDriftMetric(column_name='Pred_Anaemic'),
+            ColumnDriftMetric(column_name='Pred_kwhTotal'),
             DatasetMissingValuesMetric()
         ],
         timestamp=datetime.datetime.now()
@@ -93,13 +91,13 @@ def export_data(data, *args, **kwargs):
 
     # Reporting
     project = None
-    projects = ws.search_project("Anemia Data Quality Project")
+    projects = ws.search_project("Energy Consumption Prediction Project")
     print(projects)
     if len(projects) > 0:
         project = projects[0]
     else:
-        project = ws.create_project("Anemia Data Quality Project")
-        project.description = "Anemia data monitoring"
+        project = ws.create_project("Energy Consumption Prediction Project")
+        project.description = "Energy Consumption monitoring"
         project.save()
     
     report.run(reference_data=df_train.to_pandas(),
@@ -113,7 +111,7 @@ def export_data(data, *args, **kwargs):
         DashboardPanelCounter(
             filter=ReportFilter(metadata_values={}, tag_values=[]),
             agg=CounterAgg.NONE,
-            title="Anemia data dashboard"
+            title="Energy Consumption dashboard"
         )
     )
 
@@ -150,3 +148,4 @@ def export_data(data, *args, **kwargs):
     )
 
     project.save()
+
