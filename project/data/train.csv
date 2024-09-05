@@ -1,4 +1,4 @@
-day_of_week,created_date,chargeTimeHrs,distance,stationId,locationId,target
+day_of_week,created_date,chargeTimeHrs,distance,stationId,locationId,kwhTotal
 0,2015-07-27,2.720555556,28.5290954,874950,814002,6.99
 2,2015-09-09,2.923611111,32.8745456,369001,493904,6.76
 2,2015-07-29,3.033611111,2.4955424,129465,461655,5.98
