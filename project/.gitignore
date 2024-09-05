@@ -1,8 +1,7 @@
-/service/streaming
 /service/web-service-mlflow
 /service/web-service-with-Docker
 io_config.yaml
 problems.md
 .DS_Store
-
+.env
 

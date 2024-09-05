@@ -140,7 +140,11 @@ Docker was used to build a container-based infrastructure, which packaged the en
 
 **Note**:
 
-* `docker logs -f` to show the realtime logs .
+* `docker logs -f` to show the realtime logs.
+* `docker exec -it container_id /bin/bash` run within the container.
+* `docker ps` list the containers.
+* `docker build -t container_name:vresion .` build docker image
+* `docker run -v ~/.aws:/root/.aws:ro -p host_port:docker_port container_name:vresion` run the docker
 
 
 
@@ -191,3 +195,4 @@ All details are in [mlops folder](project/mlops)
 The deployment is with MLflow and on AWS.
 
 All details are in [the web service for energy consumption prediction project](project/service/web-service-mlflow-with-Docker)
+

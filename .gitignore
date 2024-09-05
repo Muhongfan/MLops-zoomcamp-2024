@@ -1,6 +1,0 @@
-./project/service/streaming
-./project/service/web-service-mlflow
-./project/service/web-service-with-Docker
-./project/io_config.yaml
-./project/problems.md
-./project/.env

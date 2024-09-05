@@ -11,7 +11,7 @@ gunicorn = "*"
 numpy = "==1.23.5"
 requests = "*"
 boto3 = "*"
-mlflow = "*"
+mlflow = "2.12.1"
 mypy-extensions = "*"
 
 [dev-packages]
