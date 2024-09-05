@@ -1,5 +1,9 @@
 /service/web-service-mlflow
 /service/web-service-with-Docker
+/service/streaming/mlruns
+/service/streaming/downloads
+/service/streaming/__pycache__
+/service/streaming/model_dependencies.yaml
 io_config.yaml
 problems.md
 .DS_Store
