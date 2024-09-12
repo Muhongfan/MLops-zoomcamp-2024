@@ -4,7 +4,7 @@
 To develop a predictive model for estimating energy consumption during electric vehicle (EV) charging sessions using historical data from a workplace charging program. The model will aid in optimizing energy management, understanding usage patterns, and improving the efficiency of charging infrastructure.
 ### 1.1 Project structure
 ```
-├── 01-intro
+    ├── 01-intro
     │   └── Notes.md
     ├── 02-experiement-tracking
     │   └── Notes.md
