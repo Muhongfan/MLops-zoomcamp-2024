@@ -2,11 +2,26 @@
 
 ## 1. **Project Objective:**
 To develop a predictive model for estimating energy consumption during electric vehicle (EV) charging sessions using historical data from a workplace charging program. The model will aid in optimizing energy management, understanding usage patterns, and improving the efficiency of charging infrastructure.
+### 1.1 Project structure
+```
+├── 01-intro
+    │   └── Notes.md
+    ├── 02-experiement-tracking
+    │   └── Notes.md
+    ├── 03-orchestration
+    │   └── Notes.md
+    ├── README.md
+    ├── images
+    ├── project
+    └── README.md
+```
+The folder contains the updated notes for the first three chapters, and the project for MLops course. README.MD is also provided for understanding the project structure and intruduction of the project.
+
 
 ## 2.**Dataset Description:**
 The dataset comprises 3,395 high-resolution EV charging sessions, with data collected from 85 EV drivers across 105 stations located at 25 different workplace sites. These sites include various facilities such as research and innovation centers, manufacturing plants, testing facilities, and office headquarters. The dataset is in CSV format, with timestamps recorded to the nearest second, allowing for precise analysis.
 
-## 3. **Key Features:**
+### 2.1. **Key Features:**
 - **sessionId:** Unique identifier for each charging session.
 - **kwhTotal:** The amount of energy consumed during the session (in kWh).
 - **dollars:** The amount of money paid for energy charging.
@@ -52,10 +67,10 @@ The dataset comprises 3,395 high-resolution EV charging sessions, with data coll
 This project will contribute to the ongoing efforts in optimizing EV charging infrastructure and support sustainable energy management practices in workplace environments. -->
 
 
-## 4. **How to Use**: 
-### **4.1 Environment preparetion**
+## 3. **How to Use**: 
+### **3.1 Environment preparetion**
 
-### Using conda
+<!-- ### Using conda
 1. Clone the repository: `https://github.com/Muhongfan/MLops-zoomcamp-2024.git`
 
 2. Navigate to Project directory: `cd project`
@@ -66,64 +81,46 @@ This project will contribute to the ongoing efforts in optimizing EV charging in
 conda env create -f environment.yml
 conda activate mlopsproject
 ```
-or
-### Using Pip
+or -->
+**Using Pip**
 1. Clone the repository: `https://github.com/Muhongfan/MLops-zoomcamp-2024.git`
 
 2. Navigate to Project directory: `cd project`
 
-3. Install the required packages using `requirements.txt`:`pip install -r requirements.txt`
-### **4.2 Model training, tracking and registry**
-* Go to `mlops` and run `./scripts/start.sh` to set up the orchestration with mageai. 
-* Go to `http://localhost:6789/` to open the mageai on your browser
-* Go to `project_energy_consumption->Pipelines` to run each pipelines. (`data preparetion -> xgboost_training -> model_registry`) 
+3. Install the required packages using `Pipefile`:`pipenv shell`
 
+### **3.2 Model training, tracking and registry**
+1. Run `jupyter notebook energy_forecast.ipynb` to reproduce the model (if need)
+   - Set up the aws profile: `cd .aws` to config aws credentials including `aws_access_key_id`, `aws_secret_access_key`, `region`, etc.
+   - Turn on MLflow server on EC2 by seting up the virtual env: 
+      ```
+      sudo apt-get install python3-pip
+      sudo apt install python3-venv
+      python3 -m venv myenv
+      source myenv/bin/activate
+      pip install mlflow boto3 psycopg2-binary
+      pip show mlflow boto3 psycopg2-binary
+      ```
+   - Start the MLflow server: `mlflow server -h 0.0.0.0 -p PORT_LAUNCH_MLFLOW --backend-store-uri postgresql://DB_USER:DB_USER_PWD@DB_ENDPOINT:PORT/DB_NAME --default-artifact-root s3://S3_BUCKET_NAME`
+   - Run `jupyter notebook energy_forecast.ipynb` to retrain the model
+   - Check the registryed model on terminal with MLflow server as`TRACKING_SERVER_HOST:5000`, where `TRACKING_SERVER_HOST` is the DNS of your EC2 instance.
+
+The datasets and model will be stored and registryed in S3 and MLflow after model training. Check at AWS S3 and MLflow.
+ 
 ***Note:***
 As the modle and artifacts are deployed on AWS, In `model_registry`, it requires your AWS profile info.
 
-### **4.3 Model training, tracking and registry**
+### **3.4 Deployment with Flask and docker**
 
-All details are in [the web service for energy consumption prediction project](project/service/web-service-mlflow-with-Docker)
-
-Check the registryed model on terminal with `TRACKING_SERVER_HOST:5000`, where `TRACKING_SERVER_HOST` is the DNS of your EC2 instance (MLflow sever).
-
-### **4.4 Containerized Infrastructure with Docker**
 Docker was used to build a container-based infrastructure, which packaged the entire environment into containers, making it portable and consistent across different machines.
 
-#### Docker build up
+1. Setup your AWS profile
 
-1. Under the folder [service](service/web-service-mlflow-with-Docker). The tree of the folder is 
-```
-├── aws_utils
-├── data
-├── mlops
-├── service
-    ├── web-service-mlflow-with-Docker
-    │   ├── Dockerfile
-    │   ├── Pipfile
-    │   ├── Pipfile.lock
-    │   ├── downloads
-    │   │   └── models
-    │   │       ├── MLmodel
-    │   │       ├── conda.yaml
-    │   │       ├── model.pkl
-    │   │       ├── python_env.yaml
-    │   │       └── requirements.txt
-    │   ├── predict.py
-    │   └── test.py
-    └── monitoring
-
-```
-* `aws_utils`: upload config file and dataset that are used for workflow with mageai; 
-* `data`: dataset
-* `mlops`: workflow with mageai
-* `service`: webservice and monitoring service
-
-2. Setup your AWS profile
+2. Set up the pipenv for the deployment
 
 3. Build the docker with `docker build -t energy-consumption-prediction-service-mlflow:v1 .` for webservice under `service/web-service-mlflow-with-Docker` 
 
-3. Run the docker
+4. Run the docker
 <!-- 
 `docker run -v ~/.aws:/root/.aws:ro -p 9696:9696 energy-consumption-prediction-service-mlflow:v1` -->
 
@@ -132,13 +129,14 @@ Docker was used to build a container-based infrastructure, which packaged the en
     ```
     with which requires the configure of your run_id, experiment_id and AWS profile
 
+5. Test the docker with `python test.py` 
+
+All details are in [the web service for energy consumption prediction project](project/service/web-service-mlflow-with-Docker)
+
 **Note:**
 - The run_id, experiment_id can be obtained from step 4.2 on Mage-ai, Model_registry process.
 - AWS profile is expected to be your own AWS profile.
 - Run the test file via `python test.py`
-
-
-**Note**:
 
 * `docker logs -f` to show the realtime logs.
 * `docker exec -it container_id /bin/bash` run within the container.
@@ -146,31 +144,34 @@ Docker was used to build a container-based infrastructure, which packaged the en
 * `docker build -t container_name:vresion .` build docker image
 * `docker run -v ~/.aws:/root/.aws:ro -p host_port:docker_port container_name:vresion` run the docker
 
+### **3.5 (or) Deployment with lambda and docker**
+All details are in [the serverless service for energy consumption prediction project](project/service/streaming)
 
+1. Setup your AWS profile
 
+2. Set up the pipenv for the deployment
 
+3. Build the docker with `docker build -t stream-model-duration:v1 .` for serverless service under `service/streaming` 
 
+4. Run the docker
 
+    ```
+    docker run -v ~/.aws:/root/.aws:ro -p 1234:9696 stream-model-duration:v1
+    ```
+    with which requires the configure of your run_id, experiment_id and AWS profile in Dockerfile
 
+5. Test the docker with `python test_docker.py` 
 
+## 4. Orchestration
+Set up Orchestration with Mage AI.
 
-## Orchestration
-Using mage AI for ML workflow.
+* Go to `mlops` and run `./scripts/start.sh` to set up the orchestration with mageai. 
+* Go to `http://localhost:6789/` to open the mageai on your browser
+* Go to `project_energy_consumption->Pipelines` to run each pipelines. (`data preparetion -> xgboost_training -> model_registry`) 
 
 ![Data preparetion pipeline](images/projects/pipeline-dataprepare.png)
 
-### Setup
-1. Jump to folder `mlops/` and start the service with `./scripts/start.sh`
-
-2. Open `http://localhost:6789` in your browser.
-
-### Monitoring results (some)
-![The results of monitoring for datasets](images/projects/monitoring-datasets.png)
-![The results of monitoring for chargeTimeHrs](images/projects/monitoring-chargeTimeHrs.png)
-
-
-
-## . The Projects Structures
+### 4.1 The Orchestration Structures
 1. **EDA and Data preprocessing**
 The primary goal of the first step is to gain a basic understanding of the dataset related to energy consumption during electric vehicle (EV) charging sessions. Additionally, the analysis will explore and identify relationships between key variables such as energy consumption, associated costs, distance traveled, charge time, and user behavior.
 
@@ -191,8 +192,6 @@ All details are in [this jupyter notebook](project/energy_forecast.ipynb)
 
 All details are in [mlops folder](project/mlops)
 
-4. **Deployment**
-The deployment is with MLflow and on AWS.
-
-All details are in [the web service for energy consumption prediction project](project/service/web-service-mlflow-with-Docker)
-
+4. **Monitoring results (some)**
+![The results of monitoring for datasets](images/projects/monitoring-datasets.png)
+![The results of monitoring for chargeTimeHrs](images/projects/monitoring-chargeTimeHrs.png)
